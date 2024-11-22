@@ -1,0 +1,19 @@
+name: Create a release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check if branch is main
+      if: endsWith(github.event.base_ref, 'main') == false
+      run: exit -1
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
